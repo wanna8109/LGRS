@@ -1,0 +1,153 @@
+#RequireAdmin
+#include <WinAPIProc.au3>
+#include <Date.au3>
+#include <array.au3>
+Global $Lgrs
+Opt("TrayMenuMode",11)
+Local $BT_M_Login="15,135",$BT_M_Back="100,50",$ProgramTitle1="",$ProgramTitle2="?????"
+Local $Program="Langrisser.exe",$ProgramL="PDLauncher.exe",$CfgFile=@ScriptDir&"\config.txt",$Auto=0
+Local $BT_M_Login="15,135",$BT_M_Back="100,50",$ProgramTitle1="梦幻模拟战",$ProgramTitle2="逍遥模拟器"
+Local $BT_M_Shijian="950,130",$BT_M_Mijin="950,205",$BT_M_JJC="950,280",$BT_M_SKLF="950,355"
+Local $BT_M_Mail="30,225",$BT_M_GetMail="945,500",$BT_M_Friend="30,340",$BT_M_FriendS="195,525",$BT_M_FriendR="370,525"
+Local $BT_M_Call="360,540",$BT_M_Call_FriendCall="890,500",$BT_M_Call_FriendCallone="290,500",$BT_M_Call_FriendCallConfirm="350,500"
+Local $BT_M_Hero="170,540",$BT_M_Hero_Detail="960,320",$BT_M_Hero_exp="805,60",$BT_M_Hero_expAdd="335,368",$BT_M_Hero_expConfirm="556,408"
+Local $BT_M_LB="645,540",$BT_M_LB1="930,260",$BT_M_LB2="930,340", $BT_M_LB2_1="760,190",$BT_M_LB2_2="760,345",$BT_M_LB2_3="760,495"
+Local $BT_M_LB_4H="500,415", $BT_M_LB_8H="660,415",$BT_M_LB_12H="810,415",$BT_M_LB_Add1="300,150",$BT_M_LB_Add2="300,290",$BT_M_LB_Add3="300,430"
+Local $BT_M_LB_Hero1="355,170",$BT_M_LB_Hero2="635,320",$BT_M_LB_Hero3="355,450",$BT_M_LB_Hero4="445,170",$BT_M_LB_Hero5="445,320",$BT_M_LB_Hero6="545,320"
+Local $BT_M_LB_Hero7="545,170",$BT_M_LB_Hero8="635,170",$BT_M_LB_Hero9="355,320",$BT_M_LB_Confirm="620,530"
+Local $BT_Burger="370,375",$BT_Burgerok="655,485"
+Local $BT_M_Mijin_1="900,200",$BT_M_Mijin_2="900,295",$BT_M_Mijin_3="900,380"
+Local $BT_M_Mijin_1_Dragon="500,420",$BT_M_Mijin_1_DragonMV="750,360",$BT_M_Mijin_1_DragonSD70="780,440",$BT_M_Mijin_1_DragonSD65="780,300"
+Local $BT_M_Mijin_1_DragonSD="630,540",$BT_M_Mijin_1_DragonSD_Confirm="575,375"
+Local $BT_M_Shop="355,800",$BT_M_Shop_ZB="490,90",$BT_M_Shop_ZB1="145,195",$BT_M_Shop_ZB2="295,195",$BT_M_Shop_ZB3="440,195"
+Local $BT_M_Shop_JB="290,350",$BT_M_Shop_Buy="395,495",$BT_M_Shop_Ball="145,360"
+Local $BT_M_Shop_FM="590,195",$BT_M_Shop_FMQF="560,380"
+Local $BT_ZD_Confirm="575,380",$BT_ZD_Request="120,150",$BT_ZD_Request_Yes="180,215",$BT_ZD_Start="815,485",$BT_ZD_Go="935,530"
+
+#Region LXLB
+While 1
+$Answer=MsgBox(262144+3,"LB","Check training? wait for you 30 seconds",30)
+If $Answer=7 Then
+	TrayTip("LB","See you next 10 minutes",5)
+ElseIf $Answer=2 Then
+	ExitLoop
+Else
+_LB_Timer($ProgramTitle1)
+EndIf
+Sleep(10*60*1000)
+WEnd
+#EndRegion
+Func _LB_Timer($ProgramTitle)
+$LBT=FileRead($ProgramTitle)
+	If	@error Then
+		$Flag=1;no record
+	Else
+		If _DateDiff("n",$LBT,_NowCalc()) > 0 Then
+			$Flag=2;yes
+		Else
+			$Flag=0;no
+		EndIf
+	EndIf
+	If $Flag>0 Then
+	_AdjustWin($ProgramTitle)
+		$Answer=_LB(1000)
+			If $Answer=4 Then
+				FileDelete($ProgramTitle)
+				FileWrite($ProgramTitle,_DateAdd("h",4,_NowCalc()))
+			ElseIf $Answer=8 Then
+				FileDelete($ProgramTitle)
+				FileWrite($ProgramTitle,_DateAdd("h",8,_NowCalc()))
+			EndIf
+	EndIf
+Return $Flag
+EndFunc
+Func _LB($Wait)
+_Mainwin($BT_M_Back,300)
+_Mainwin($BT_M_Back,300)
+Sleep(1000)
+_Mainwin($BT_M_LB,2000)
+_Mainwin($BT_M_LB2,$Wait)
+$iColor = PixelGetColor(760, 180)
+If $iColor>11400000 And $iColor<11800000 Then TrayTip("LB","Already",5)
+	If $iColor>16759000 And $iColor<16761000 Then
+		_Mainwin($BT_M_LB2_1,$Wait)
+		_Mainwin($BT_M_LB2_1,$Wait)
+		_Mainwin($BT_M_LB2_2,$Wait)
+		_Mainwin($BT_M_LB2_2,$Wait)
+		_Mainwin($BT_M_LB2_3,$Wait)
+		_Mainwin($BT_M_LB2_3,$Wait)
+		_Mainwin($BT_M_LB2_3,$Wait)
+	EndIf
+$iColor = PixelGetColor(760, 180)
+	If	$iColor>5880000 And $iColor<5890000 Then
+		_Mainwin($BT_M_LB2_1,$Wait)
+		If @HOUR>20 Then
+			_Mainwin($BT_M_LB_12H,2000)
+			$RetuenV=12
+		Else
+			_Mainwin($BT_M_LB_4H,2000)
+			$RetuenV=4
+		EndIf
+		_Mainwin($BT_M_LB_Add1,2000)
+		_Mainwin($BT_M_LB_Hero1,$Wait)
+		_Mainwin($BT_M_LB_Hero2,$Wait)
+		_Mainwin($BT_M_LB_Hero3,$Wait)
+		_Mainwin($BT_M_LB_Confirm,2000)
+		_Mainwin($BT_M_LB_Confirm,$Wait)
+		Sleep(5000)
+		_Mainwin($BT_M_LB2_2,$Wait)
+		_Mainwin($BT_M_LB_Add2,2000)
+		_Mainwin($BT_M_LB_Hero4,$Wait)
+		_Mainwin($BT_M_LB_Hero5,$Wait)
+		_Mainwin($BT_M_LB_Hero6,$Wait)
+		_Mainwin($BT_M_LB_Confirm,2000)
+		_Mainwin($BT_M_LB_Confirm,$Wait)
+		Sleep(5000)
+		_Mainwin($BT_M_LB2_3,$Wait)
+		_Mainwin($BT_M_LB_Add3,2000)
+		_Mainwin($BT_M_LB_Hero7,$Wait)
+		_Mainwin($BT_M_LB_Hero8,$Wait)
+		_Mainwin($BT_M_LB_Hero9,$Wait)
+		_Mainwin($BT_M_LB_Confirm,2000)
+		_Mainwin($BT_M_LB_Confirm,$Wait)
+		_Mainwin($BT_M_Back,$Wait)
+		Return $RetuenV
+	Else
+		_Mainwin($BT_M_Back,$Wait)
+		Return "N"
+	EndIf
+Sleep(2000)
+EndFunc
+Func _AdjustWin($Title)
+Local $Lgrs = WinWait($Title, "", 10)
+If @error Then Exit MsgBox(0,"???","Langrisser is not running")
+WinActivate($Lgrs,"")
+WinWaitActive($Lgrs,"")
+Local $PPos=WinGetPos($Lgrs,""),$P1_Start=-8,$P2_Start=-8,$P_Width=1008,$P_Height=600
+	If $Title=$ProgramTitle2 Then
+		$P_Width-=7
+		$P_Height-=7
+	EndIf
+	If $PPos[0]=$P1_Start And $PPos[1]=$P2_Start And $PPos[2]=$P_Width And $PPos[3]=$P_Height Then
+	Else
+	WinMove ($Lgrs,"",$P1_Start,$P2_Start,$P_Width,$P_Height)
+	_Mainwin($BT_M_Login,1000)
+		If $Auto=1 Then Sleep(5000)
+	EndIf
+Sleep(1000)
+EndFunc
+Func _MainDragwin($BT_Main,$DragDis)
+$Width_Height=StringSplit($BT_Main,",")
+$Width=$Width_Height[1]
+$Height=$Width_Height[2]
+MouseMove($Width,$Height,10)
+MouseClickDrag("left",$Width,$Height,$Width,$Height+$DragDis,5)
+Sleep(1000)
+EndFunc
+Func _Mainwin($BT_Main,$Sleep)
+$Width_Height=StringSplit($BT_Main,",")
+$Width=$Width_Height[1]
+$Height=$Width_Height[2]
+MouseClick("left",$Width,$Height,1,15)
+Sleep($Sleep)
+EndFunc
