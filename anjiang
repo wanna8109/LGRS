@@ -4,7 +4,6 @@
 #include <array.au3>
 Global $Lgrs
 Opt("TrayMenuMode",11)
-Local $BT_M_Login="15,135",$BT_M_Back="100,50",$ProgramTitle1="",$ProgramTitle2="?????"
 Local $Program="Langrisser.exe",$ProgramL="PDLauncher.exe",$CfgFile=@ScriptDir&"\config.txt",$Auto=0
 Local $BT_M_Login="15,135",$BT_M_Back="100,50",$ProgramTitle1="梦幻模拟战",$ProgramTitle2="逍遥模拟器"
 Local $BT_M_Shijian="950,130",$BT_M_Mijin="950,205",$BT_M_JJC="950,280",$BT_M_SKLF="950,355"
